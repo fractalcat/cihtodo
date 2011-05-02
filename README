@@ -17,4 +17,5 @@ USAGE:
 Deploy with webserver and database backend of choice; alternatively, it should work out of the box on localhost/sqlite3:
 
 cd cihtodo
+python manage.py syncdb
 python manage.py runserver
