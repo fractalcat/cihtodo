@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <p><a href="{% url todo.views.adhoc_show note.todo.pk %}">{{ note.todo.name }}</a></p>
+    {% if note.name %}<h1>{{ note.name }}</h1>{% endif %}
+    <p>
+      {{ note.text }}
+    </p>
+{% endblock %}
+      

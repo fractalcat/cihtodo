@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}    
+{% if todo.notes.count %}
+    <p><em>notes:</em></p>
+    <ul>
+    {% for n in todo.notes.all %}
+    <li><a href="{% url todo.views.show_note n.pk %}">{% if n.name %}{{ n.name }}{% else %}{{ n.pk }}{% endif %}</a></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% if todo %}
+    {% if todo.parent %}
+    <p><em><a href="{% url todo.views.adhoc_show todo.parent.pk %}">{{ todo.parent.name }}</a></em></p>
+    {% else %}
+    <p><em><a href="{% url todo.views.adhoc_todos %}">root</a></em></p>
+    {% endif %}
+    {% endif %}
+    <h1>{% if todo %}{{ todo.pretty|safe }}{% else %}root{% endif %}</h1>
+    {% if todo %}
+    <form action="{% url todo.views.adhoc_add todo.pk %}" method="post">
+      {% else %}
+      <form action="{% url todo.views.adhoc_add 0 %}" method="post">
+	{% endif %}
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="add" />
+    </form>
+      {% if active %}
+      <p><em>active:</em></p>
+      <ul>
+      {% for t in active %}
+      <li><a href="{% url todo.views.adhoc_show t.pk %}">--&gt;</a> {{ t.pretty|safe }} (({% if t.children.all.count %}{{ t.children.all.count }}{% else %}<a href="{% url todo.views.adhoc_done t.pk %}">done</a>{% endif %}))</li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+      {% if done %}
+      <p><em>done:</em></p>
+      <ul>
+	{% for t in done %}
+	<li><a href="{% url todo.views.adhoc_show t.pk %}">--&gt;</a> <s>{{ t.pretty|safe }}</a></s></li>
+      {% endfor %}
+      </ul>
+      {% endif %}
+      {% if todo %}
+      <form action="{% url todo.views.add_note todo.pk %}" method="post">
+      {% csrf_token %}
+      {{ noteform.as_p }}
+      <input type="submit" value="add" />
+    </form>
+      {% endif %}
+     {% endblock %} 

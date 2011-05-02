@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>{% block title %}cihtodo{% endblock %}</title>
+    </head>
+  <body>
+    <p><a href="{% url todo.views.adhoc_todos %}">todo</a>|<a href="{% url todo.views.list_tags %}">tags</a></p>
+    {% block content %} {% endblock %}
+    </body>
+</html>

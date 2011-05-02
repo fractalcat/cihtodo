@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ tagname }}</h1>
+{% if active %}
+    <h3>active</h3>
+    <ul>
+    {% for todo in active %}
+        <li><a href="{% url todo.views.adhoc_show todo.pk %}">--&gt;</a> {{ todo.pretty|safe }}</a> (({% if todo.children.all.count %}{{ todo.children.all.count }}{% else %}<a href="{% url todo.views.adhoc_done todo.pk %}">done</a>{% endif %}))</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% if done %}
+    <h3>done</h3>
+    <ul>
+    {% for todo in done %}
+        <li><a href="{% url todo.views.adhoc_show todo.pk %}">--&gt;</a> <s>{{ todo.pretty|safe }}</a></s></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}
+      

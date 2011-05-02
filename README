@@ -1,0 +1,20 @@
+cihtodo 0.1; written by fractalcat (sio@tesser.org)
+
+cihtodo ('crap I have to do') is a small Python/Django todo list application
+that doesn't do all that much (I prefer it that way). What it does do is
+todo-trees and hashtags. I wrote it 'cause I wanted a todolist that didn't suck
+(as defined by me); releasing it on the off-chance that someone finds it
+useful. 
+
+REQUIREMENTS:
+
+python (>=2.7&&<3.0)
+django (written for 1.3, but will probably work with others)
+some kind of database
+
+USAGE:
+
+Deploy with webserver and database backend of choice; alternatively, it should work out of the box on localhost/sqlite3:
+
+cd cihtodo
+python manage.py runserver

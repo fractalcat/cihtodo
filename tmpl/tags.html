@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>tags</h1>
+<ul>
+{% for tag in tags %}
+    <li><a href="{% url todo.views.show_tag tag.name %}">{{ tag.name }}</a> (({{ tag.count }}))</li>
+{% endfor %}
+</ul>
+{% endblock %}
+      
