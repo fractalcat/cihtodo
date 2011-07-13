@@ -3,7 +3,7 @@ from django.template import RequestContext
 from rxp import rxp
 from models import *
 
-def do_render(req, tmpl, context):
+def do_render(req, tmpl, context={}):
     return render_to_response(tmpl, context, context_instance=RequestContext(req))
 
 def mark_done(todo):

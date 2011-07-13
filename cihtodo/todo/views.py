@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+import simplejson as json
 from models import *
 from util import *
 from forms import *
@@ -20,7 +21,10 @@ def show_tag(req, tagname):
 
 def list_tags(req):
     tags = Tag.objects.all()
-    return do_render(req, 'tags.html', {'tags' : tags})
+    return do_render(req, 'all_tags.html', {'tags' : tags})
+
+def tags(req):
+    return do_render(req, 'tags.html')
 
 def adhoc_show(req, pk):
     active = []
@@ -89,3 +93,7 @@ def adhoc_done(req, pk):
     mark_done(todo)
     return HttpResponseRedirect(reverse(adhoc_show, args=(todo.parent.pk if todo.parent else 0,)))
 
+def tag_autocomplete(req):
+    pref = req.GET.get('term', None)
+    res = Tag.objects.filter(name__istartswith=pref) if pref else Tag.objects.all()
+    return HttpResponse(json.dumps(map(lambda t: {'label' : '%s (%d)' % (t.name,t.count), 'value' : t.name}, sorted(list(res), key=lambda t: 0-t.count))))

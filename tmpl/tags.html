@@ -1,10 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>tags</h1>
-<ul>
-{% for tag in tags %}
-    <li><a href="{% url todo.views.show_tag tag.name %}">{{ tag.name }}</a> (({{ tag.count }}))</li>
-{% endfor %}
-</ul>
+<div class="ui-widget">
+    <label for="tagname">tag: </label>
+    <input id="tagname" />
+</div>
+<p><a href="{% url todo.views.list_tags %}">(all tags)</a></p>
+
+<script>
+    $(function() {
+        function showtag( tag ) {
+            window.location.pathname += '/' + tag;
+        }
+
+        $( "#tagname" ).autocomplete({
+            source: "{% url todo.views.tag_autocomplete %}",
+            minLength: 1,
+            autoFocus: true,
+            select: function( event, ui ) {
+                showtag(ui.item.value);
+            }
+        });
+    });
+    </script>
 {% endblock %}
       
